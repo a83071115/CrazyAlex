@@ -34,10 +34,7 @@ public interface ZhiHuDailyContract {
          * @param list 知乎的接口Url
          */
         void showResults(ArrayList<ZhihuDailyNews.Question> list);
-        /**
-         * 用于加载指定日期
-         */
-        void showPickDialog();
+
     }
 
     /**

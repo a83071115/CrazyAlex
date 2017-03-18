@@ -17,6 +17,19 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     //标题
     private String[] titles;
     private Context mContext;
+
+    public DouBanMomentFragment getDouBanMomentFragment() {
+        return mDouBanMomentFragment;
+    }
+
+    public GuokrFragment getGuokrFragment() {
+        return mGuokrFragment;
+    }
+
+    public ZhiHuDailyFragment getZhiHuDailyFragment() {
+        return mZhiHuDailyFragment;
+    }
+
     private ZhiHuDailyFragment mZhiHuDailyFragment;
     private GuokrFragment mGuokrFragment;
     private DouBanMomentFragment mDouBanMomentFragment;

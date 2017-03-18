@@ -130,7 +130,7 @@ public class ZhiHuDailyPresenter implements ZhiHuDailyContract.Presenter {
                     } catch (JsonSyntaxException e){
                         mView.showError();
                     }
-                    mView.showLoading();
+                    mView.stopLoading();
 
                 }
 
