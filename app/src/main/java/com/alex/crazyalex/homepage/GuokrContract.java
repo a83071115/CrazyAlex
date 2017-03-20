@@ -30,17 +30,14 @@ public interface GuokrContract {
         /**
          * 显示结果
          */
-        void Results(ArrayList<GuokrHandpickNews.result> list);
+        void showResults(ArrayList<GuokrHandpickNews.result> list);
     }
 
     /**
      * 果壳的界面操作接口
      */
     interface Presenter extends BasePresenter{
-        /**
-         * 加载更多
-         */
-        void loadMore(long date);
+
         /**
          * 刷新数据
          */
@@ -60,9 +57,9 @@ public interface GuokrContract {
          */
         /**
          * 请求数据
-         * @param date
+         *
          */
-        void loadPosts(long date, boolean clearing);
+        void loadPosts();
 
     }
 }

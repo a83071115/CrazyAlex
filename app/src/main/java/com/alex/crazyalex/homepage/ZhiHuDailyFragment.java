@@ -3,8 +3,10 @@ package com.alex.crazyalex.homepage;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alex.crazyalex.R;
+import com.alex.crazyalex.adapter.MainPagerAdapter;
 import com.alex.crazyalex.adapter.ZhiHuDailyNewsAdapter;
 import com.alex.crazyalex.bean.ZhihuDailyNews;
 import com.alex.crazyalex.interfaze.OnRecyclerViewOnClickListener;
@@ -121,12 +124,39 @@ public class ZhiHuDailyFragment extends Fragment implements ZhiHuDailyContract.V
                 if(mTabLayout.getSelectedTabPosition()==0){
                     Calendar now = Calendar.getInstance();
                     now.set(mYear,mMonth,mDay);
+                    //生成日期选择对话框 并设置点击事件
                     DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-
+                            mYear = year;
+                            mMonth = monthOfYear;
+                            mDay = dayOfMonth;
+                            //设置个临时的日历
+                            Calendar temp = Calendar.getInstance();
+                            //将临时日历清除
+                            temp.clear();
+                            //将用户选择的年月日设置给临时日历
+                            temp.set(year, monthOfYear, dayOfMonth);
+                            //加载数据,用时期加载
+                            presenter.loadPosts(temp.getTimeInMillis(), true);
                         }
                     },now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+                    //对话框设置当前的日期时间
+                    dialog.setMaxDate(Calendar.getInstance());
+                    //获取日期对象
+                    Calendar minDate = Calendar.getInstance();
+                    // 2013.5.20是知乎日报api首次上线
+                    minDate.set(2013, 5, 20);
+                    //设置日期的最小日期 , 只能点击到2013年5月20日
+                    dialog.setMinDate(minDate);
+                    //将日期选择器 不能点
+                    dialog.vibrate(false);
+
+                    dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+                }else if(mTabLayout.getSelectedTabPosition()==2){
+                    ViewPager p = (ViewPager) getActivity().findViewById(R.id.view_pager);
+                    MainPagerAdapter ad = (MainPagerAdapter) p.getAdapter();
+                    ad.getDouBanMomentFragment().showPickDialog();
 
                 }
             }
@@ -135,19 +165,40 @@ public class ZhiHuDailyFragment extends Fragment implements ZhiHuDailyContract.V
         return view;
     }
 
+    /**
+     * 显示加载错误
+     */
     @Override
     public void showError() {
-
+        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.refresh();
+                    }
+                });
     }
 
     @Override
     public void showLoading() {
-
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                //显示下拉刷新 圆圈
+                refresh.setRefreshing(true);
+            }
+        });
     }
 
     @Override
     public void stopLoading() {
-
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                //关闭下拉刷新 圆圈
+                refresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -167,10 +218,6 @@ public class ZhiHuDailyFragment extends Fragment implements ZhiHuDailyContract.V
         }
     }
 
-    @Override
-    public void showPickDialog() {
-
-    }
 
     @Override
     public void setPresenter(ZhiHuDailyContract.Presenter presenter) {
@@ -182,8 +229,29 @@ public class ZhiHuDailyFragment extends Fragment implements ZhiHuDailyContract.V
     @Override
     public void initViews(View view) {
         mRecyclerView= (RecyclerView) view.findViewById(recyclerView);
+        //设置固定大小
         mRecyclerView.setHasFixedSize(true);
+        //设置线性的 垂直排列
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        /**
+         * 直接将豆瓣精选的点击事件放在知乎的部分
+         * 因为fab是属于activity的view
+         * 所以在findviewbyid中 如要中getActivity()来点
+         * 按通常的做法,在每个fragment中去设置监听时间会导致先前设置的listener失效
+         * 尝试将监听放置到main pager adapter中,这样做会引起fragment中recycler view和fab的监听冲突
+         * fab并不能获取到点击事件
+         * 根据tab layout 的位置选择显示不同的dialog
+         */
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        //设置fab的渐变颜色
+        fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        //设置下拉刷新的按钮的颜色
+        refresh.setColorSchemeResources(R.color.colorPrimary);
+
     }
 
 }

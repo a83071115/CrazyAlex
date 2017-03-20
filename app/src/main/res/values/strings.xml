@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CrazyAlex</string>
+    <string name="app_name">紫蜻蜓</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -45,7 +45,7 @@
     <string name="about">关于</string>
     <!--navigation view menu end-->
 
-    <string name="share_extra"> 分享自 纸飞机</string>
+    <string name="share_extra"> 分享自 CrazyAlex</string>
     <string name="share_to">分享至</string>
 
     <!--activity关于-->

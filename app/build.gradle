@@ -43,5 +43,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     // 为了保持在低版本SDK中的UI一致性，引入material data time picker库
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
+    // 绑定控件
+    compile 'com.jakewharton:butterknife:7.0.1'
     testCompile 'junit:junit:4.12'
 }

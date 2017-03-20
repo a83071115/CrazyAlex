@@ -10,121 +10,137 @@ import com.alex.crazyalex.Baseview;
  */
 
 public class DetailContract {
-    interface View extends Baseview<Presenter>{
-        /**
-         * 加载数据
-         */
-        void showLoading();
-        /**
-         * 停止加载
-         */
-        void stopLoading();
-        /**
-         * 加载错误
-         */
-        void showLoadingError();
-        /**
-         * 分享错误
-         */
-        void showSharingError();
 
-        /**
-         * 联网请求
-         * @param result  请求数据
-         */
-        void showResult(String result);
+        interface View extends Baseview<Presenter> {
+            /**
+             * 显示正在加载
+             */
+            void showLoading();
 
-        /**
-         * 显示内容
-         * @param url 内容url
-         */
-        void showResultWithoutBody(String url);
+            /**
+             * 停止加载
+             */
+            void stopLoading();
 
-        /**
-         * 显示封面
-         * @param url  内容url
-         */
-        void showCover(String url);
+            /**
+             * 显示加载错误
+             */
+            void showLoadingError();
 
-        /**
-         * 设置标题
-         * @param title 标题
-         */
-        void setTitle(String title);
+            /**
+             * 显示分享时错误
+             */
+            void showSharingError();
 
-        /**
-         * 显示图片模式
-         * @param showImage
-         */
-        void setImageMode(boolean showImage);
+            /**
+             * 正确获取数据后显示内容
+             *
+             * @param result
+             */
+            void showResult(String result);
 
-        /**
-         * 网页没有找到
-         */
-        void showBrowserNotFoundError();
+            /**
+             * 对于body字段的消息,直接接在url的内容
+             *
+             * @param url
+             */
+            void showResultWithoutBody(String url);
 
-        /**
-         * 显示文本复制
-         */
-        void showTextCopied();
+            /**
+             * 显示顶部大图
+             *
+             * @param url 大图地址
+             */
+            void showCover(String url);
 
-        /**
-         * 显示复制文本错误
-         */
-        void showCopyTextError();
+            /**
+             * 设置标题
+             *
+             * @param title
+             */
+            void setTitle(String title);
 
-        /**
-         * 添加到收藏夹
-         */
-        void showAddedToBookmarks();
+            /**
+             * 设置是否显示图片
+             *
+             * @param showImage
+             */
+            void setImageMode(boolean showImage);
 
-        /**
-         * 取消收藏
-         */
-        void showDeletedFromBookmarks();
+            /**
+             * 用户选择在浏览器中打开时,如果没有安装浏览器,显示没有找到浏览器错误
+             */
+            void showBrowserNotFoundError();
 
-    }
-    interface  Presenter extends BasePresenter{
-        /**
-         * 打开浏览器
-         */
-        void openInBrowser();
-        /**
-         * 作为文本分享
-         */
-        void shareAsText();
+            /**
+             * 显示复制文字内容
+             */
+            void showTextCopied();
 
-        /**
-         * 打开WebView
-         * @param webView
-         * @param url
-         */
-        void openUrl(WebView webView,String url);
+            /**
+             * 显示复制文字失败
+             */
+            void showCopyTextError();
 
-        /**
-         * 复制文本
-         */
-        void copyText();
+            /**
+             * 添加或删除收藏
+             */
+            void showAddedToBookmarks();
 
-        /**
-         *复制链接
-         */
-        void copyLink();
+            /**
+             * 显示已从收藏夹中移除
+             */
+            void showDeletedFromBookmarks();
 
-        /**
-         * 添加或者删除收藏
-         */
-        void addToOrDeleteFromBookmars();
+        }
 
-        /**
-         * 判断是否在收藏
-         * @return
-         */
-        boolean queryIfIsBookmarked();
+        interface Presenter extends BasePresenter {
 
-        /**
-         * 返回数据
-         */
-        void requestData();
-    }
+            /**
+             * 在浏览器中打开
+             */
+            void openInBrowser();
+
+            /**
+             * 作为文字分享
+             */
+            void shareAsText();
+
+            /**
+             * 打开文章中的链接
+             *
+             * @param webView
+             * @param url
+             */
+            void openUrl(WebView webView, String url);
+
+            /**
+             * 复制文字内容
+             */
+            void copyText();
+
+            /**
+             * 复制链接
+             */
+            void copyLink();
+
+            /**
+             * 添加至收藏夹或者从收藏夹中移除
+             */
+            void addToOrDeleteFromBookmarks();
+
+            /**
+             * 查询是否已经被收藏了
+             *
+             * @return
+             */
+            boolean queryIfIsBookmarked();
+
+            /**
+             * 请求数据
+             */
+            void requestData();
+
+        }
+
 }
