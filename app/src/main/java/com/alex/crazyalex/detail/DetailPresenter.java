@@ -1,5 +1,7 @@
 package com.alex.crazyalex.detail;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.Html;
 import android.webkit.WebView;
 
 import com.alex.crazyalex.R;
@@ -24,6 +27,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by SunQiang on 2017/3/18.
@@ -155,14 +160,56 @@ public class DetailPresenter implements DetailContract.Presenter {
         }
     }
 
+    /**
+     * 复制文本
+     */
     @Override
     public void copyText() {
-
+        if(checkNull()){
+            view.showCopyTextError();
+            return;
+        }
+        //剪切板管理器
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        switch (type){
+            case TYPE_ZHIHU:
+                clipData = ClipData.newPlainText("text", Html.fromHtml(title + "\n" + mZhihuDailyStory.getBody().toString()));
+                break;
+            case TYPE_GUOKR:
+                clipData = clipData.newPlainText("text",Html.fromHtml(guokrStory).toString());
+                break;
+            case TYPE_DOUBAN:
+                clipData = clipData.newPlainText("text",Html.fromHtml(title + "\n" + mDoubanMomentStory.getContent().toString()));
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
     }
 
+    /**
+     * 复制链接
+     */
     @Override
     public void copyLink() {
+        if (checkNull()){
+            view.showCopyTextError();
+            return;
+        }
 
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        switch (type){
+            case TYPE_ZHIHU:
+                clipData = ClipData.newPlainText("text",Html.fromHtml(mZhihuDailyStory.getShare_url()).toString());
+                break;
+            case TYPE_GUOKR:
+                clipData = ClipData.newPlainText("text",Html.fromHtml(Api.GUOKR_ARTICLE_LINK_V1 + id).toString());
+                break;
+            case TYPE_DOUBAN:
+                clipData = ClipData.newPlainText("text",Html.fromHtml(mDoubanMomentStory.getOriginal_url()).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
     }
 
     @Override

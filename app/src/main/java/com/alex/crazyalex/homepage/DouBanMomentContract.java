@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/3/16.
  */
 
-public interface DouBanMomentContract {
+public class DouBanMomentContract {
     /**
      * 知乎界面的显示接口
      */
