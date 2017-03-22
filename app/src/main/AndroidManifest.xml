@@ -27,10 +27,12 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts"/>
         </activity>
-        <activity android:name=".search.SearchActivity">
-        </activity>
 
         <service android:name=".service.CacheService"/>
+        <activity android:name=".search.SearchActivity"
+                  android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
+                  android:label="@string/title_activity_read"
+                  android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".detail.DetailActivity"

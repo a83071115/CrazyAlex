@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.alex.crazyalex.bean.BeanType;
 import com.alex.crazyalex.bean.GuokrHandpickNews;
@@ -92,6 +93,7 @@ public class GuokrPresenter implements GuokrContract.Presenter {
             mStringMode.load(Api.GUOKR_ARTICLES, new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {
+                    Log.e("alex",result+"result");
                     //由于果壳并没有按照日期加载的api
                     //所以不存在加载指定日期内容的操作,当要请求数据时一定是在进行刷新
                     list.clear();

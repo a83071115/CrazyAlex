@@ -283,7 +283,7 @@ public class DetailPresenter implements DetailContract.Presenter {
 
         }
 
-        String sql = "select + from " + tempTable + "where" + tempId + " = ?";
+        String sql = "select * from " + tempTable + " where " + tempId + " = ?";
         Cursor cursor = dbHelper.getReadableDatabase()
                 .rawQuery(sql,new String[]{String.valueOf(id)});
         if(cursor.moveToFirst()){

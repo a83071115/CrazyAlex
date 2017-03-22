@@ -1,7 +1,5 @@
 package com.alex.crazyalex.bookmarks;
 
-import android.content.Intent;
-
 import com.alex.crazyalex.BasePresenter;
 import com.alex.crazyalex.Baseview;
 import com.alex.crazyalex.bean.BeanType;
@@ -31,7 +29,7 @@ public interface BookmarksContract {
         void showResults(ArrayList<ZhihuDailyNews.Question> zhihuList,
                           ArrayList<GuokrHandpickNews.result> guokrList,
                           ArrayList<DoubanMomentNews.posts> doubanList,
-                          ArrayList<Intent> types
+                          ArrayList<Integer> types
                           );
 
         /**
