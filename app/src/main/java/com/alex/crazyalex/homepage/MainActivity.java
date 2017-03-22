@@ -23,6 +23,7 @@ import com.alex.crazyalex.R;
 import com.alex.crazyalex.bookmarks.BookmarksFragment;
 import com.alex.crazyalex.bookmarks.BookmarksPresenter;
 import com.alex.crazyalex.service.CacheService;
+import com.alex.crazyalex.settings.SettingsPreferenceActivity;
 
 
 public class MainActivity extends AppCompatActivity
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         } else if (id == R.id.nav_settings) {
-
+            startActivity(new Intent(this, SettingsPreferenceActivity.class));
         } else if (id == R.id.nav_about) {
 
         }
