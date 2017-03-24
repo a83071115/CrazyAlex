@@ -14,17 +14,27 @@
  * limitations under the License.
  */
 
-package com.alex.crazyalex.bean;
+package com.alex.crazyalex.license;
+
+
+import com.alex.crazyalex.BasePresenter;
+import com.alex.crazyalex.Baseview;
 
 /**
- * Created by lizhaotailang on 2016/12/27.
+ * Created by Lizhaotailang on 2016/9/3.
+ * This specifies the contract between the view and the presenter.
  */
 
-public enum BeanType {
+public interface OpenSourceListenContract {
 
-    TYPE_ZHIHU,TYPE_GUOKR,TYPE_DOUBAN;
+    interface View extends Baseview<Presenter> {
 
+        void loadLicense(String path);
 
-    public static String a = "";
+    }
+
+    interface Presenter extends BasePresenter {
+
+    }
 
 }

@@ -61,6 +61,7 @@ public class BookmarksFragment extends Fragment implements BookmarksContract.Vie
 
         presenter.loadResults(false);
 
+
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

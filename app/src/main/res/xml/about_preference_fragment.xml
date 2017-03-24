@@ -34,10 +34,7 @@
             android:key="author"
             android:summary="@string/author_description"/>
 
-        <android.support.v7.preference.Preference
-            android:title="@string/follow_me_on_github"
-            android:key="follow_me_on_github"
-            android:summary="@string/github_url"/>
+
 
         <android.support.v7.preference.Preference
             android:title="@string/follow_me_on_zhihu"

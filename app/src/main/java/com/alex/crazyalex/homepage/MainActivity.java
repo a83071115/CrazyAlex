@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alex.crazyalex.R;
+import com.alex.crazyalex.about.AboutPreferenceActivity;
 import com.alex.crazyalex.bookmarks.BookmarksFragment;
 import com.alex.crazyalex.bookmarks.BookmarksPresenter;
 import com.alex.crazyalex.service.CacheService;
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsPreferenceActivity.class));
         } else if (id == R.id.nav_about) {
-
+            startActivity(new Intent(this, AboutPreferenceActivity.class));
         }
 
         return true;
